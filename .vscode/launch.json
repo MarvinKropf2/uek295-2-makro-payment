@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-Uek295PaymentApplication<uek_295_payment>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "ch.noseryoung.uek_295_payment.Uek295PaymentApplication",
+            "projectName": "uek_295_payment",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
