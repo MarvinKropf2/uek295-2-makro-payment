@@ -1,4 +1,8 @@
 package ch.noseryoung.uek_295_payment.Domain.Payment;
 
-public interface PaymentRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface PaymentRepository extends JpaRepository<Payment, Integer> {
 }
