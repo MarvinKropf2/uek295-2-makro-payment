@@ -34,7 +34,7 @@ public class PaymentController {
     @PreAuthorize("hasAuthority('READ')")
     @GetMapping("/{paymentId}")
     public ResponseEntity<Payment> getpaymentById(@PathVariable("paymentId") Integer paymentId)
-            throws InstanceNotFoundException, paymentNotFoundException {
+            throws InstanceNotFoundException {
         return ResponseEntity.ok().body(paymentService.getpaymentById(paymentId));
     }
 
@@ -59,12 +59,12 @@ public class PaymentController {
     @PutMapping("/{paymentId}")
     public ResponseEntity<Payment> updatepayment(@PathVariable("paymentId") int paymentId,
             @Valid @RequestBody Payment payment)
-            throws AccessDeniedException, InstanceNotFoundException, paymentNotFoundException {
+            throws AccessDeniedException, InstanceNotFoundException{
         return ResponseEntity.ok().body(paymentService.updatepayment(paymentId, payment));
     }
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<String> handleNoSuchElementException(NoSuchElementException element) {
-        return ResponseEntity.status(404).body("No Payment with id " + element.getMessage() + " found");
+        return ResponseEntity.status(404).body("" + element.getMessage() + " ");
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -73,15 +73,7 @@ public class PaymentController {
                 + element.getBindingResult().getFieldError().getDefaultMessage());
     }
 
-    public class paymentNotFoundException extends Exception {
-        public paymentNotFoundException(String message) {
-            super(message);
-        }
 
-        public paymentNotFoundException() {
-            super();
-        }
-    }
 
 
 }
