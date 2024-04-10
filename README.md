@@ -6,7 +6,7 @@ This README provides instructions for setting up and running the backend applica
 Ensure you have the following installed on your system:
 - [VSCode](https://code.visualstudio.com/download)
 - [Java Development Kit (JDK)](https://jdk.java.net/archive/)
-- [Gradle](https://spring.io/guides/gs/gradle)
+- [Gradle](https://gradle.org/install/)
 - [Docker](https://www.docker.com/products/docker-desktop/)
 - [Postman](https://www.postman.com/downloads/)
 
