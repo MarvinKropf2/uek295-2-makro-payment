@@ -2,18 +2,16 @@ package ch.noseryoung.uek_295_payment.Domain.Payment;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
-
 import java.util.NoSuchElementException;
-import ch.noseryoung.uek_295_payment.Domain.Payment.Payment;
-
 import javax.management.InstanceNotFoundException;
-import javax.management.InstanceAlreadyExistsException;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
 @RestController
@@ -23,14 +21,14 @@ public class PaymentController {
     @Autowired
     private PaymentService paymentService;
 
-    @Operation(description = "Receive a list of all payments that are stored in the db. Access to this Endpoint requires READ authority", summary = "get all payments that are stored in the db")
+    @Operation
     @PreAuthorize("hasAuthority('READ')")
     @GetMapping("/")
     public ResponseEntity<Object> getpayment() {
         return ResponseEntity.ok().body(paymentService.getpayment());
     }
 
-    @Operation(description = "Receive a specific payment by id that is stored in the db. Access to this Endpoint requires READ authority", summary = "get payment by a specific id that is stored in the db")
+    @Operation
     @PreAuthorize("hasAuthority('READ')")
     @GetMapping("/{paymentId}")
     public ResponseEntity<Payment> getpaymentById(@PathVariable("paymentId") Integer paymentId)
@@ -38,7 +36,7 @@ public class PaymentController {
         return ResponseEntity.ok().body(paymentService.getpaymentById(paymentId));
     }
 
-    @Operation(description = "add payment that will be stored in the db, requires CREATE Authority", summary = "add payment that will be stored in the db")
+    @Operation
     @PreAuthorize("hasAuthority('CREATE')")
     @PostMapping("/")
     public ResponseEntity<Payment> addpayment(@Valid @RequestBody Payment payment)
@@ -46,7 +44,7 @@ public class PaymentController {
         return ResponseEntity.ok().body(paymentService.addpayment(payment));
     }
 
-    @Operation(description = "Delete payment that is stored in the db by its id. Access to this Endpoint requires DELETE authority", summary = "delete payment by id that is stored in the db")
+    @Operation
     @PreAuthorize("hasAuthority('DELETE')")
     @DeleteMapping("/{paymentId}")
     public String deletepayment(@PathVariable("paymentId") int index) {
@@ -54,7 +52,7 @@ public class PaymentController {
         return "You Deleted " + index;
     }
 
-    @Operation(description = "Update existing payment in the db with new values. Access to this Endpoint requires UPDATE authority", summary = "update existing payment that is stored in the db")
+    @Operation
     @PreAuthorize("hasAuthority('UPDATE')")
     @PutMapping("/{paymentId}")
     public ResponseEntity<Payment> updatepayment(@PathVariable("paymentId") int paymentId,
@@ -73,7 +71,24 @@ public class PaymentController {
                 + element.getBindingResult().getFieldError().getDefaultMessage());
     }
 
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<String> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException element) {
+        return ResponseEntity.status(400).body("" + element.getMessage() + " ");
+    }
+
+        @ExceptionHandler(Exception.class)
+        public ResponseEntity<String> handleException(Exception ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Resource not found: " + ex.getMessage());
+        }
 
 
+        @ControllerAdvice
+        public class GlobalExceptionHandler {
+            
+            @ExceptionHandler(Exception.class)
+            public ResponseEntity<String> handleException(Exception ex) {
+                return ResponseEntity.status(404).body("" + ex.getMessage() + " ¯\\ __(ツ)__/¯ ");
+            }
+        }
 
 }

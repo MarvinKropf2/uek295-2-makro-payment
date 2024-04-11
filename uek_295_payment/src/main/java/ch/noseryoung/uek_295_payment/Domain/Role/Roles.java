@@ -1,14 +1,10 @@
 package ch.noseryoung.uek_295_payment.Domain.Role;
 
-
 import jakarta.persistence.*;
 import lombok.Setter;
 import lombok.Getter;
-
 import java.util.Set;
-
 import org.hibernate.validator.constraints.Length;
-
 import ch.noseryoung.uek_295_payment.Domain.User.User;
 import ch.noseryoung.uek_295_payment.Domain.authority.Authorities;
 
