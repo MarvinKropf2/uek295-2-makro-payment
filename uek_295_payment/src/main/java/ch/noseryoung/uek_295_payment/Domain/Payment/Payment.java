@@ -20,7 +20,7 @@ public class Payment {
 
     @Column(name = "payment_method")
     @NotBlank(message = "Payment method must contain a value")
-    @Size(min = 3, max = 20)
+    @Size(min = 3, max = 20, message = "Payment method must be between 3 and 20 characters")
     private String paymentMethod;
 
     @Column(name = "chf_exchange_rate")
@@ -29,6 +29,6 @@ public class Payment {
 
     @Column(name = "currency")
     @NotBlank(message = "Currency must contain a value")
-    @Size(min = 2, max = 20)
+    @Size(min = 2, max = 20 , message = "Currency must be between 2 and 20 characters")
     private String currency;
 }

@@ -69,6 +69,7 @@ public class PaymentController {
     public ResponseEntity<String> handleMethodArgumentNotValidException(MethodArgumentNotValidException element) {
         return ResponseEntity.badRequest().body(element.getBindingResult().getFieldError().getField() + " is invalid: "
                 + element.getBindingResult().getFieldError().getDefaultMessage());
+
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
