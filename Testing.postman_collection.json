@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "Unauthorized",
+			"name": "List all payments",
 			"event": [
 				{
 					"listen": "test",
@@ -68,7 +68,7 @@
 			"response": []
 		},
 		{
-			"name": "Unauthorized2",
+			"name": "Unauthorized get request",
 			"event": [
 				{
 					"listen": "test",
@@ -117,7 +117,7 @@
 			"response": []
 		},
 		{
-			"name": "200OK on ID4",
+			"name": "Successful get request on id 4",
 			"event": [
 				{
 					"listen": "test",
@@ -215,7 +215,7 @@
 			"response": []
 		},
 		{
-			"name": "Error handling",
+			"name": "Successful 404 not found error handling",
 			"event": [
 				{
 					"listen": "test",
@@ -502,8 +502,8 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 405\", function () {\r",
-							"    pm.response.to.have.status(405);\r",
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
 							"});"
 						],
 						"type": "text/javascript",
@@ -704,6 +704,55 @@
 					"path": [
 						"payment",
 						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Value does not exist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "12345678",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/payment/19",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"payment",
+						"19"
 					]
 				}
 			},
