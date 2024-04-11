@@ -21,14 +21,14 @@ public class PaymentController {
     @Autowired
     private PaymentService paymentService;
 
-    @Operation
+    @Operation (description = "this methode gets a list of all payments that are stored in the db, this requires READ authority" , summary = "gets a list of all payments")
     @PreAuthorize("hasAuthority('READ')")
     @GetMapping("/")
     public ResponseEntity<Object> getpayment() {
         return ResponseEntity.ok().body(paymentService.getpayment());
     }
 
-    @Operation
+    @Operation (description = "this methode gets a payment by its id that is stored in the db, this requires READ authority" , summary = "gets a payment by its id")
     @PreAuthorize("hasAuthority('READ')")
     @GetMapping("/{paymentId}")
     public ResponseEntity<Payment> getpaymentById(@PathVariable("paymentId") Integer paymentId)
@@ -36,7 +36,7 @@ public class PaymentController {
         return ResponseEntity.ok().body(paymentService.getpaymentById(paymentId));
     }
 
-    @Operation
+    @Operation(description = "this methode adds a payment that will be stored in the db, this requires CREATE authority" , summary = "adds a payment")
     @PreAuthorize("hasAuthority('CREATE')")
     @PostMapping("/")
     public ResponseEntity<Payment> addpayment(@Valid @RequestBody Payment payment)
@@ -44,7 +44,7 @@ public class PaymentController {
         return ResponseEntity.ok().body(paymentService.addpayment(payment));
     }
 
-    @Operation
+    @Operation( description = "this methode deletes a payment that is stored in the db, this requires DELETE authority" , summary = "deletes a payment")
     @PreAuthorize("hasAuthority('DELETE')")
     @DeleteMapping("/{paymentId}")
     public String deletepayment(@PathVariable("paymentId") int index) {
@@ -52,7 +52,7 @@ public class PaymentController {
         return "You Deleted " + index;
     }
 
-    @Operation
+    @Operation(description = "this methode updates a payment that is stored in the db, this requires UPDATE authority" , summary = "updates a payment")
     @PreAuthorize("hasAuthority('UPDATE')")
     @PutMapping("/{paymentId}")
     public ResponseEntity<Payment> updatepayment(@PathVariable("paymentId") int paymentId,
